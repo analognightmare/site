@@ -34,7 +34,7 @@ matrix:
         - wasm-pack build
         - cd www && npm install
         - npm run build
-        - echo "leex.dev" > docs/CNAME
+        - echo "leex.dev" > ../docs/CNAME
         - mv ./dist/* ../docs
       deploy:
         provider: pages
