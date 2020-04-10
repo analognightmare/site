@@ -29,11 +29,22 @@
 h1 {
   font-family: 'Montserrat', sans-serif;
   color: #6c71c4;
-  margin:.75em 0;
+  margin: .75em 0;
+}
+
+a {
+  color: #073642;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: bold;
+  color: #268bd2;
 }
 
 p {
   font-family: 'Merriweather', serif;
-	color: #073642;
-  margin:.5rem 0
+  color: #073642;
+  margin: .5em 0
 }

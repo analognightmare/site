@@ -35,6 +35,7 @@ matrix:
         - cd www && npm install
         - npm run build
         - echo "leex.dev" > ../docs/CNAME
+        - cp index.css ./dist
         - mv ./dist/* ../docs
       deploy:
         provider: pages
