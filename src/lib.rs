@@ -48,6 +48,7 @@ impl Universe {
     }
 
     pub fn tick(&mut self) {
+        self.random();
         self.cells = (0..self.width * self.height)
             .enumerate()
             .map(|(idx, _)| {
@@ -58,17 +59,31 @@ impl Universe {
                 }
             })
             .collect();
-        self.random();
+        for idx in 0..(self.height - 1) {
+            self.cells[(idx * self.width) as usize] = Cell::Dead;
+        }
     }
 
     pub fn random(&mut self) {
-        let offset = self.width * (self.height - 1) - 1;
         let mut rng = rand::thread_rng();
-        for idx in 0..self.width {
-            self.cells[(idx + offset) as usize] = match rng.gen::<bool>() {
+        for idx in 1..(self.height - 1) {
+            self.cells[((idx - 1) * self.width) as usize] = Cell::Dead;
+            self.cells[(idx * self.width - 1) as usize] = match rng.gen::<bool>() {
                 true => Cell::Alive,
                 false => Cell::Dead,
             };
+            if rng.gen::<bool>() {
+                self.cells[(idx * self.width - 2) as usize] = match rng.gen::<bool>() {
+                    true => Cell::Alive,
+                    false => Cell::Dead,
+                };
+            }
+            if rng.gen::<bool>() && rng.gen::<bool>() {
+                self.cells[(idx * self.width - 3) as usize] = match rng.gen::<bool>() {
+                    true => Cell::Alive,
+                    false => Cell::Dead,
+                };
+            }
         }
     }
 

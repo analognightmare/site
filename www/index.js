@@ -8,7 +8,7 @@ const ALIVE_COLOR = "#d33682";
 const DEAD_COLOR = "#073642";
 
 const height = Math.floor(document.documentElement.clientHeight / 8) + 2
-const width = Math.floor(document.documentElement.clientWidth / 8)
+const width = Math.floor(document.documentElement.clientWidth / 16)
 const universe = Universe.new(width, height);
 
 const canvas = document.getElementById("game-of-life-canvas");

@@ -1,0 +1,39 @@
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.left {
+  left: 0;
+  background-color: #073642;
+}
+
+.right {
+  right: 0;
+  background-color: #fdf6e3;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  text-align: left;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  color: #6c71c4;
+  margin:.75em 0;
+}
+
+p {
+  font-family: 'Merriweather', serif;
+	color: #073642;
+  margin:.5rem 0
+}
