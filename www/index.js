@@ -2,10 +2,9 @@ import { Universe, Cell } from "wasm-game-of-life";
 import { memory } from "wasm-game-of-life/wasm_game_of_life_bg";
 
 const CELL_SIZE = 7;
-const GRID_COLOR = "#CCCCCC";
-// const DEAD_1_COLOR = "#6c71c4";
-const ALIVE_COLOR = "#d33682";
-const DEAD_COLOR = "#073642";
+var style = getComputedStyle(document.body);
+const ALIVE_COLOR = style.getPropertyValue('--cell-color');
+const DEAD_COLOR = style.getPropertyValue('--bg-left-color');
 
 const height = Math.floor(document.documentElement.clientHeight / 8) + 2
 const width = Math.floor(document.documentElement.clientWidth / 16)
