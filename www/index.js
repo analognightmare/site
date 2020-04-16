@@ -6,15 +6,24 @@ var style = getComputedStyle(document.body);
 const ALIVE_COLOR = style.getPropertyValue('--cell-color');
 const DEAD_COLOR = style.getPropertyValue('--bg-left-color');
 
-const height = Math.floor(document.documentElement.clientHeight / 8) + 2
-const width = Math.floor(document.documentElement.clientWidth / 16)
-const universe = Universe.new(width, height);
+var height = Math.floor(document.documentElement.clientHeight / 8) + 2
+var width = Math.floor(document.documentElement.clientWidth / 16)
+var universe = Universe.new(width, height);
 
-const canvas = document.getElementById("game-of-life-canvas");
+var canvas = document.getElementById("game-of-life-canvas");
 canvas.height = (CELL_SIZE + 1) * height;
 canvas.width = (CELL_SIZE + 1) * width;
 
 const ctx = canvas.getContext('2d');
+
+const resizeUniverse = () => {
+  height = Math.floor(document.documentElement.clientHeight / 8) + 2
+  width = Math.floor(document.documentElement.clientWidth / 16)
+  universe.resize(width, height);
+  canvas.height = (CELL_SIZE + 1) * height;
+  canvas.width = (CELL_SIZE + 1) * width;
+}
+window.addEventListener("resize", resizeUniverse);
 
 const renderLoop = () => {
   universe.tick();
@@ -29,8 +38,8 @@ const getIndex = (row, column) => {
 };
 
 const drawCells = () => {
-  const cellsPtr = universe.cells();
-  const cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
+  var cellsPtr = universe.cells();
+  var cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
 
   ctx.beginPath();
 

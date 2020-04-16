@@ -1,6 +1,5 @@
 extern crate rand;
 use rand::Rng;
-use std::fmt;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -21,9 +20,24 @@ pub struct Universe {
 #[wasm_bindgen]
 impl Universe {
     pub fn resize(&mut self, width: u32, height: u32) {
+        let mut cells = vec![Cell::Dead; (width * height) as usize];
+        for h in 0..self.height {
+            if h >= height {
+                continue;
+            }
+            for w in (0..self.width).rev() {
+                let dif_abs = (self.width as i32 - width as i32).abs() as u32;
+                let dif = width as i32 - self.width as i32;
+                if w < dif_abs && self.width > width {
+                    continue;
+                }
+                cells[((h * width + w) as i32 + dif) as usize] =
+                    self.cells[(h * self.width + w) as usize];
+            }
+        }
         self.width = width;
         self.height = height;
-        self.cells = (0..self.width * self.height).map(|_i| Cell::Dead).collect();
+        self.cells = cells;
     }
 
     pub fn cells(&self) -> *const Cell {
@@ -88,7 +102,6 @@ impl Universe {
     }
 
     pub fn new(width: u32, height: u32) -> Universe {
-        // let cells = (0..width * height).map(|_| Cell::Dead).collect();
         let cells: Vec<Cell> = vec![Cell::Dead; (width * height) as usize];
 
         Universe {
@@ -96,35 +109,5 @@ impl Universe {
             height,
             cells,
         }
-    }
-
-    pub fn render(&self) -> String {
-        self.to_string()
-    }
-}
-
-impl Universe {
-    pub fn get_cells(&self) -> &[Cell] {
-        &self.cells
-    }
-
-    pub fn set_cells(&mut self, cells: &[(u32, u32)]) {
-        for (row, col) in cells.iter() {
-            self.cells[(row * self.width + col) as usize] = Cell::Alive;
-        }
-    }
-}
-
-impl fmt::Display for Universe {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        for line in self.cells.as_slice().chunks(self.width as usize) {
-            for &cell in line {
-                let symbol = if cell == Cell::Dead { '◻' } else { '◼' };
-                write!(f, "{}", symbol)?;
-            }
-            write!(f, "\n")?;
-        }
-
-        Ok(())
     }
 }
